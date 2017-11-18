@@ -1,7 +1,7 @@
 
 all: run
 
-clean:; rm run main.o
+clean:; rm run main.o plot.data
 
 run: main.o
 	g++ main.o -o run -lm -O2

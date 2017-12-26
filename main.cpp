@@ -9,6 +9,7 @@
 using namespace std;
 using namespace Eigen;
 
+// v to new v and get norm
 void gramschmidt(Vector3d *v, double *norm)
 {
 
@@ -28,6 +29,8 @@ void gramschmidt(Vector3d *v, double *norm)
 
 int main(int argv, char* argc[])
 {
+	const int n = 18000;
+
 	////////////////lorenz//////////////////
 	Rungekutta<double> lorenz;
 	double p=16.0, r=45.92, b=4.0;
@@ -56,20 +59,15 @@ int main(int argv, char* argc[])
 	ofstream fp ("plot.data");
 	double lyapnov[3]={0.0,0.0,0.0};
 
-	double n = 18000.0;
+	fp << "# " << n << endl;
 
 	for(double i = 0.0; i < n; i+=1.0)
 	{
 		rungekutta<double>(lorenz);
 		Jacobi << -p,p,0.0, -lorenz.v[2]+r,-1.0,-lorenz.v[0], lorenz.v[1],lorenz.v[0],-b;	
 
-
 		for(int j = 0; j < 3; j++)
 			rw[j].v[0] = w[j];
-
-		//// eular method
-		//for(int j = 0; j < 3; j++)
-		//	w[j] += lorenz.dt*Jacobi*w[j];
 
 		//// rungekutta method
 		for(int j = 0; j < 3; j++)
@@ -80,8 +78,10 @@ int main(int argv, char* argc[])
 
 		gramschmidt(w, lyapnov);
 
-		fp << lorenz.v[0] << " " << lorenz.v[1] << " " <<  lorenz.v[2] << " " << lyapnov[0]/(i*lorenz.dt) << " " << lyapnov[1]/(i*lorenz.dt) << " " << lyapnov[2]/(i*lorenz.dt) << endl;
+		// x y z lyapnov1 lyapnov2 lyapnov3 
+		fp << lorenz.v[0] << " " << lorenz.v[1] << " " <<  lorenz.v[2] << " " << lyapnov[0]/((double)i*lorenz.dt) << " " << lyapnov[1]/((double)i*lorenz.dt) << " " << lyapnov[2]/((double)i*lorenz.dt) << endl;
+
+
 	}
-	for(int i = 0; i < 3; i++)
-		cout << "lyapnov" << i <<  ":" << lyapnov[i]/(n*lorenz.dt) << endl;
+
 }

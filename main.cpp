@@ -29,7 +29,8 @@ void gramschmidt(Vector3d *v, double *norm)
 
 int main(int argv, char* argc[])
 {
-	const int n = 18000;
+	const int n = 60000;
+	const double dt = 0.001;
 
 	////////////////lorenz//////////////////
 	Rungekutta<double> lorenz;
@@ -40,7 +41,7 @@ int main(int argv, char* argc[])
 	lorenz.f.push_back([&p](vector<double> xs){return -p*xs[0]+p*xs[1];});
 	lorenz.f.push_back([&r](vector<double> xs){return -xs[0]*xs[2]+r*xs[0]-xs[1];});
 	lorenz.f.push_back([&b](vector<double> xs){return xs[0]*xs[1]-b*xs[2];});
-	lorenz.dt = 0.001;
+	lorenz.dt = dt;
 	///////////////////w////////////////////
 	Eigen::Matrix3d Jacobi;
 	Vector3d w[3];
@@ -50,7 +51,7 @@ int main(int argv, char* argc[])
 	Rungekutta<Vector3d> rw[3];
 	for(int i = 0; i < 3; i++)
 	{
-		rw[i].dt = 0.001;
+		rw[i].dt = dt;
 		rw[i].v.push_back(w[i]);
 		rw[i].f.push_back([&Jacobi](vector<Vector3d> xs){return Jacobi*xs[0];});
 	}
@@ -58,6 +59,7 @@ int main(int argv, char* argc[])
 
 	ofstream fp ("plot.data");
 	double lyapnov[3]={0.0,0.0,0.0};
+	double alyapnov[3]={0.0,0.0,0.0};
 
 	fp << "# " << n << endl;
 
@@ -78,10 +80,20 @@ int main(int argv, char* argc[])
 
 		gramschmidt(w, lyapnov);
 
+		double t = (double)i*dt;
+
 		// x y z lyapnov1 lyapnov2 lyapnov3 
-		fp << lorenz.v[0] << " " << lorenz.v[1] << " " <<  lorenz.v[2] << " " << lyapnov[0]/((double)i*lorenz.dt) << " " << lyapnov[1]/((double)i*lorenz.dt) << " " << lyapnov[2]/((double)i*lorenz.dt) << endl;
+		if(i != 0.0)
+			fp << t << " " << lorenz.v[0] << " " << lorenz.v[1] << " " <<  lorenz.v[2] << " " << lyapnov[0]/t << " " << lyapnov[1]/t << " " << lyapnov[2]/t << endl;
+
+		if(i >= 50000)
+			for(int j = 0; j < 3; j++)
+				alyapnov[j] += lyapnov[j]/t;
 
 
 	}
+
+	for(int j = 0; j < 3; j++)
+		cout << alyapnov[j]/10000.0 << endl;
 
 }

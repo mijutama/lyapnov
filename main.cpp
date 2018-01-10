@@ -83,7 +83,7 @@ int main(int argv, char* argc[])
 		double t = (double)i*dt;
 
 		// x y z lyapnov1 lyapnov2 lyapnov3 
-		if(i != 0.0)
+		if( i > 0.0)
 			fp << t << " " << lorenz.v[0] << " " << lorenz.v[1] << " " <<  lorenz.v[2] << " " << lyapnov[0]/t << " " << lyapnov[1]/t << " " << lyapnov[2]/t << endl;
 
 		if(i >= 50000)

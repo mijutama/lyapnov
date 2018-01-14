@@ -1,5 +1,5 @@
 
-all: run fft
+all: run fft reat
 
 clean:; rm run main.o
 
@@ -11,3 +11,6 @@ main.o: main.cpp
 
 fft: fft.cpp
 	g++ fft.cpp -o fft -O2 -std=c++11 -lfftw3
+
+reat: reat.cpp
+	g++ reat.cpp -o reat -O2 -std=c++11

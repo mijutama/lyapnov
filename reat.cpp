@@ -27,21 +27,20 @@ int main()
 	ofstream yfs("yreat.data");
 	ofstream zfs("zreat.data");
 
+  getline(ifs,s);
 	while(getline(ifs, s))
 	{
 		ss = split(s);
-		cout << ss[1] << " " << ss[2] << " " << ss[3] << endl;
 		xs.push_back(ss[1]);
 		ys.push_back(ss[2]);
-		//zs.push_back(ss[3]);
+		zs.push_back(ss[3]);
 	}
 
 	ifs.close();
 
-	/*
 	// x
-	int t1 = 1;
-	int t2 = 1;
+	int t1 = 20;
+	int t2 = 20;
 	for(int i = t1+t2; i+t1+t2 < xs.size(); i+=t1+t2)
 		xfs << xs[i-t1-t2] << " " << xs[i-t2] << " " << xs[i] << endl;
 	// y
@@ -57,6 +56,5 @@ int main()
 	xfs.close();
 	yfs.close();
 	zfs.close();
-	*/
 	return 0;
 }

@@ -39,19 +39,19 @@ int main()
 	ifs.close();
 
 	// x
-	int t1 = 20;
-	int t2 = 20;
-	for(int i = t1+t2; i+t1+t2 < xs.size(); i+=t1+t2)
+	int t1 = 50;
+	int t2 = 50;
+	for(int i = t1+t2; i+t1+t2 < xs.size(); i++)
 		xfs << xs[i-t1-t2] << " " << xs[i-t2] << " " << xs[i] << endl;
 	// y
-	t1 = 1;
-	t2 = 1;
-	for(int i = t1+t2; i+t1+t2 < ys.size(); i+=t1+t2)
+	//t1 = 1;
+	//t2 = 1;
+	for(int i = t1+t2; i+t1+t2 < ys.size(); i++)
 		yfs << ys[i-t1-t2] << " " << ys[i-t2] << " " << ys[i] << endl;
 	// z
-	t1 = 1;
-	t2 = 1;
-	for(int i = t1+t2; i+t1+t2 < zs.size(); i+=t1+t2)
+	//t1 = 1;
+	//t2 = 1;
+	for(int i = t1+t2; i+t1+t2 < zs.size(); i++)
 		zfs << zs[i-t1-t2] << " " << zs[i-t2] << " " << zs[i] << endl;
 	xfs.close();
 	yfs.close();

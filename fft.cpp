@@ -61,7 +61,7 @@ int main()
 	fftw_execute(planx);
 	fftw_execute(plany);
 	fftw_execute(planz);
-	for(int i = 0; i < N; i++)
+	for(int i = 0; i < N/2; i++)
 		of << xx[i][0]*xx[i][0]+xx[i][1]*xx[i][1] << " " << yy[i][0]*yy[i][0]+yy[i][1]*yy[i][1] << " " << zz[i][0]*zz[i][0]+zz[i][1]*zz[i][1] << endl;
 
 	if(planx)
